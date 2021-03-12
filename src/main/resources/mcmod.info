@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "simplykush",
+    "name": "Simply Kush",
+    "description": "Simply Kush Minecraft Mod for Forge 1.16.5",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/Nuclearsmilz/Simply-Kush",
+    "updateUrl": "",
+    "authorList": ["Timelord aka Chronoblaze aka Nuclearsmilz"],
+    "credits": "Kohakuu, Pharrow",
+    "logoFile": "icon.png",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
