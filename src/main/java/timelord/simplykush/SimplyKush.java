@@ -1,17 +1,20 @@
 package timelord.simplykush;
 
 import net.minecraft.block.*;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.*;
-import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.*;
 import timelord.simplykush.block.ModBlocks;
 import timelord.simplykush.item.ModItems;
+import timelord.simplykush.simplykush.ClientEvents;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -33,46 +36,29 @@ public class SimplyKush {
 	
 	
 	public SimplyKush () {
-		//SimplyKushConfig.register(ModLoadingContext.get());
+		//Config.register(ModLoadingContext.get());
 		
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		
-		// Register the setup method for modloading
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
-		// Register the enqueueIMC method for modloading
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueue);
-		// Register the processIMC method for modloading
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::process);
-		// Register the doClientStuff method for modloading
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::client);
 		
-		// Register ourselves for server and other game events we are interested in
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+		
 		MinecraftForge.EVENT_BUS.register(this);
-		
-		ModBlocks.initialize(modEventBus);
-		ModItems.initialize(modEventBus);
-		//ModCrafting.Recipes.initialize(modEventBus);
-		
-		/**
-		 ModFluids.initialise(modEventBus);
-		 ModBiomes.initialise(modEventBus);
-		 ModContainerTypes.initialise(modEventBus);
-		 ModEffects.initialise(modEventBus);
-		 ModEntities.initialise(modEventBus);
-		 ModFeatures.initialise(modEventBus);
-		 ModLootModifierSerializers.initialise(modEventBus);
-		 ModPlacements.initialise(modEventBus);
-		 ModPotions.initialise(modEventBus);
-		 ModCrafting.Recipes.initialise(modEventBus);
-		 ModSoundEvents.initialise(modEventBus);
-		 ModSurfaceBuilders.initialise(modEventBus);
-		 ModTileEntities.initialise(modEventBus);
-		 ModTestRegistryEntries.initialise(modEventBus);**/
+		FMLJavaModLoadingContext.get().getModEventBus().register(new Registry());
+		Registry.init();
+		DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
+			MinecraftForge.EVENT_BUS.register(new ClientEvents());
+			return new Object();
+		});
 	}
 	
 	@SubscribeEvent
-	public void commonSetup (final FMLCommonSetupEvent event) {
-		// some preinit code
+	public void setup (final FMLCommonSetupEvent event) {
 		LOGGER.warn("****************************************");
 		LOGGER.warn("Random UUID: {}", UUID.randomUUID().toString());
 		LOGGER.warn("****************************************");
@@ -82,14 +68,6 @@ public class SimplyKush {
 		
 		event.enqueueWork(() -> {
 			//ModCrafting.Ingredients.register();
-			/**
-			 ModCriterion.register();
-			 ModLootTables.registerLootTables();
-			 ModLootConditionTypes.register();
-			 ModLootFunctionTypes.register();
-			 
-			 BlockDumper.dump();
-			 Tests.runTests();**/
 		});
 	}
 	
@@ -102,32 +80,19 @@ public class SimplyKush {
 	}
 	
 	private void client (final FMLClientSetupEvent event) {
-		// do something that can only be done on the client
 		LOGGER.info("Got game version {}", event.getMinecraftSupplier().get().getGame().getVersion());
 	}
 	
 	private void process (final InterModProcessEvent event) {
-		// some example code to receive and process InterModComms from other mods
 		LOGGER.info("Got IMC {}", event.getIMCStream().
 				map(m -> m.getMessageSupplier().get()).
 				collect(Collectors.toList()));
 	}
 	
-	// You can use SubscribeEvent and let the Event Bus discover methods to call
 	@SubscribeEvent
 	public void onServerStarting (FMLServerStartingEvent event) {
-		// do something when the server starts
 		LOGGER.info("HELLO from server starting");
 	}
 	
-	// You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-	// Event bus for receiving Registry Events)
-	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-	public static class RegistryEvents {
-		@SubscribeEvent
-		public static void onBlocksRegistry (final RegistryEvent.Register<Block> blockRegistryEvent) {
-			// register a new block here
-			LOGGER.info("HELLO from Register Block");
-		}
-	}
+	
 }

@@ -1,4 +1,4 @@
-package timelord.simplykush.config;
+package timelord.simplykush;
 
 
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -6,11 +6,14 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class SimplyKushConfig {
-	public static class Common {
-		public final ForgeConfigSpec.BooleanValue fancyKushModel;
+public class Config {
+	
+	public static final Config INSTANCE;
+	public static final ForgeConfigSpec SPEC;
+	
+	public final ForgeConfigSpec.BooleanValue fancyKushModel;
 		
-		Common(final ForgeConfigSpec.Builder builder){
+	public Config(final ForgeConfigSpec.Builder builder){
 			builder.comment("Common config settings")
 					.push("common");
 			fancyKushModel = builder
@@ -19,20 +22,14 @@ public class SimplyKushConfig {
 					.define("fancyKushModel", false);
 			builder.pop();
 		}
-	}
-	
-	public static class Client {}
-	
-	private static final ForgeConfigSpec commonSpec;
-	public static final Common COMMON;
 	
 	static {
-		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
-		commonSpec = specPair.getRight();
-		COMMON = specPair.getLeft();
+		final Pair<Config, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Config::new);
+		SPEC = specPair.getRight();
+		INSTANCE = specPair.getLeft();
 	}
 	
 	public static void register(final ModLoadingContext  MLContext){
-		MLContext.registerConfig(ModConfig.Type.COMMON, commonSpec);
+		MLContext.registerConfig(ModConfig.Type.COMMON, SPEC);
 	}
 }

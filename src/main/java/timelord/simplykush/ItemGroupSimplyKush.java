@@ -6,23 +6,19 @@ import net.minecraftforge.api.distmarker.*;
 
 public class ItemGroupSimplyKush extends ItemGroup {
 	
-	private final ItemStack sword;
-	
-	public ItemGroupSimplyKush(){
+	public ItemGroupSimplyKush () {
 		super(SimplyKush.MODID);
-		sword = new ItemStack(Items.DIAMOND_SWORD);
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public ItemStack makeIcon() {
-		return sword;
+	public ItemStack makeIcon () {
+		return new ItemStack(Registry.BAGGED_KUSH.get(), 1);
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void fillItemList (NonNullList<ItemStack> items) {
-		items.add(sword.copy());
 		super.fillItemList(items);
 	}
 }
