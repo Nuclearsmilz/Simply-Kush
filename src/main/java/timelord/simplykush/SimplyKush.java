@@ -59,9 +59,9 @@ public class SimplyKush {
 	
 	@SubscribeEvent
 	public void setup (final FMLCommonSetupEvent event) {
-		LOGGER.warn("****************************************");
+		LOGGER.warn("*****************************************");
 		LOGGER.warn("Random UUID: {}", UUID.randomUUID().toString());
-		LOGGER.warn("****************************************");
+		LOGGER.warn("*****************************************");
 		
 		LOGGER.info("HELLO FROM PREINIT");
 		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
