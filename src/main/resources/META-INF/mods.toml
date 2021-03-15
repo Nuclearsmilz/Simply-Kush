@@ -37,7 +37,7 @@ displayURL="https://github.com/Nuclearsmilz/Simply-Kush" #optional
 
 logoFile="icon.png" #optional
 # A text field displayed in the mod UI
-credits="Couldn't have done it without Kohakuu and Pharrow!" #optional
+credits="Couldn't have done it without Kohakuu and Pharrow! lb this for you" #optional
 # A text field displayed in the mod UI
 authors="Timelord aka Chronoblaze aka Nuclearsmilz" #optional
 # The description text for the mod (multi line!) (#mandatory)
