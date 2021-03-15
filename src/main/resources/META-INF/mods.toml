@@ -39,7 +39,7 @@ logoFile="icon.png" #optional
 # A text field displayed in the mod UI
 credits="Couldn't have done it without Kohakuu and Pharrow!" #optional
 # A text field displayed in the mod UI
-authors="Timelord/Chronoblaze/Nuclearsmilz" #optional
+authors="Timelord aka Chronoblaze aka Nuclearsmilz" #optional
 # The description text for the mod (multi line!) (#mandatory)
 
 description='''

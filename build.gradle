@@ -51,7 +51,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                simplykush {
                     source sourceSets.main
                 }
             }
@@ -73,7 +73,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                simplykush {
                     source sourceSets.main
                 }
             }
@@ -98,7 +98,7 @@ minecraft {
             args '--mod', 'simplykush', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                examplemod {
+                simplykush {
                     source sourceSets.main
                 }
             }
@@ -110,7 +110,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.54'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.0.58'
 
 }
 

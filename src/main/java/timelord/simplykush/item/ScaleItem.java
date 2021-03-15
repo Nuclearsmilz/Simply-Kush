@@ -2,8 +2,8 @@ package timelord.simplykush.item;
 
 import net.minecraft.item.Item;
 
-public class SativaKush extends Item {
-	public SativaKush (Properties properties) {
+public class ScaleItem extends ItemBase {
+	public ScaleItem (Properties properties) {
 		super(properties);
 	}
 }
