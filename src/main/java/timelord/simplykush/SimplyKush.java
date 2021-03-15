@@ -1,5 +1,6 @@
 package timelord.simplykush;
 
+import io.netty.handler.proxy.HttpProxyHandler;
 import net.minecraft.block.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.*;
 import timelord.simplykush.block.ModBlocks;
 import timelord.simplykush.item.ModItems;
+import timelord.simplykush.proxy.*;
 import timelord.simplykush.simplykush.ClientEvents;
 
 import java.util.UUID;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 @Mod(SimplyKush.MODID)
 @Mod.EventBusSubscriber(modid = SimplyKush.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SimplyKush {
+	
+	public static ISidedProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 	
 	private static final Logger LOGGER = LogManager.getLogger();
 	
@@ -43,7 +47,6 @@ public class SimplyKush {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueue);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::process);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::client);
 		
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -51,6 +54,7 @@ public class SimplyKush {
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLJavaModLoadingContext.get().getModEventBus().register(new Registry());
 		Registry.init();
+		proxy.init();
 		DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
 			MinecraftForge.EVENT_BUS.register(new ClientEvents());
 			return new Object();
@@ -79,7 +83,7 @@ public class SimplyKush {
 		});
 	}
 	
-	private void client (final FMLClientSetupEvent event) {
+	public static void client (final FMLClientSetupEvent event) {
 		LOGGER.info("Got game version {}", event.getMinecraftSupplier().get().getGame().getVersion());
 	}
 	

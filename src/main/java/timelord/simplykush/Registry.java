@@ -202,12 +202,15 @@ public class Registry {
 	}
 	
 	public static RegistryObject<Item>
-		SATIVA_KUSH = addItem("sativa"),
-		INDICA_KUSH = addItem("indica"),
-		BAGGED_KUSH = addItem("bagged_kush"),
-		PLASTIC_BAGGY = addItem("plastic_baggy"),
-		SCALE = addItem("scale"),
-		ROLLING_TRAY = addItem("rolling_tray");
+		SATIVA_KUSH = addItem("sativa");
+	public static RegistryObject<Item> INDICA_KUSH = addItem("indica");
+	public static RegistryObject<Item> BAGGED_KUSH = addItem("bagged_kush");
+	public static RegistryObject<Item> PLASTIC_BAGGY = addItem("plastic_baggy");
+	public static RegistryObject<Item> SCALE = addItem("scale");
+	public static RegistryObject<Item> ROLLING_TRAY = addItem("rolling_tray");
+	public static RegistryObject<Item> SEEDS_INDICA = addItem("seeds_indica");
+	public static RegistryObject<Item> SEEDS_SATIVA = addItem("seeds_sativa");
+	public static RegistryObject<Item> SEEDS_HEMP = addItem("seeds_hemp");
 	
 	public static RegistryObject<Block>
 		PREPARATION_DESK = addBlock("preparation_desk", blockProperties(Material.METAL, MaterialColor.METAL));
